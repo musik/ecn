@@ -1,0 +1,3 @@
+#rake resque:scheduler BACKGROUND=yes PIDFILE=./tmp/schedule.pid
+rake resque:work BACKGROUND=yes PIDFILE=./tmp/resque.pid QUEUE=com_data,product,topic
+rake resque:work BACKGROUND=yes PIDFILE=./tmp/delta.pid QUEUE=td_delta INTERVAL=180

@@ -1,0 +1,19 @@
+
+-if @isor
+  .instead-or=t('pages.search.or_instead',:old=>@topic.name,:new=>@topic.name.gsub(/ /,' | ')).html_safe
+
+    
+-@prods.each do |p|
+  .hproduct
+    %h3.fn
+      =link_to highlight(p.title.capitalize,@name,:highlighter=>'<span class="highlight">\1</span>'),p.app_url,:rel=>:nofollow
+    .pricemeta=p.price_hash["fob-price"].sub(/\$ *([\d\.]+)/,'<span class="price">$\1</span>').html_safe rescue nil
+    -if p.company.present?
+      .belongs=link_to(p.company.name,p.company.app_url, :class=>'supplier')
+    %p.description
+      -text = strip_tags(p.description).gsub(/[ \s\t\n\r]+/,' ')
+      =highlight(excerpt(text,@name),@name,:highlighter=>'<span class="highlight">\1</span>') rescue truncate(text,:length=>245)
+      %small.date
+        =time_ago_in_words(p.created_at)
+        =" ago"
+        

@@ -1,0 +1,23 @@
+.row
+  .span8
+    .well.paddingzero
+      %ul.nav.nav-list
+        %li.nav-header Products
+        -@products.each do |t|
+          %li=link_to t.title,t
+        %li.nav-header Companies
+        -@companies.each do |t|
+          %li=link_to t.name,t
+
+  .span2
+    .well.paddingzero
+      %ul.nav.nav-list
+        %li.nav-header Popular
+        -@topics1.each do |t|
+          %li=link_to t.name,t
+  .span2
+    .well.paddingzero
+      %ul.nav.nav-list
+        %li.nav-header Recent
+        -@topics2.each do |t|
+          %li=link_to t.name,t

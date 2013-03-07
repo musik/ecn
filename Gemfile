@@ -13,7 +13,7 @@ gem "haml", ">= 3.1.6"
 gem "haml-rails", ">= 0.3.4", :group => :development
 gem "rspec-rails", ">= 2.11.0", :group => [:development, :test]
 gem "database_cleaner", ">= 0.8.0", :group => :test
-gem "mongoid-rspec", "1.4.6", :group => :test
+#gem "mongoid-rspec", "1.4.6", :group => :test
 gem "factory_girl_rails", ">= 3.5.0", :group => [:development, :test]
 gem "email_spec", ">= 1.2.1", :group => :test
 gem "guard", ">= 0.6.2", :group => :development  
@@ -39,3 +39,29 @@ gem "rolify", ">= 3.1.0"
 gem "bootstrap-sass", ">= 2.0.4.0"
 gem "simple_form"
 gem "therubyracer", :group => :assets, :platform => :ruby
+
+gem 'typhoeus'
+gem 'nokogiri'
+gem "stringex"
+gem 'breadcrumbs'
+gem 'kaminari'
+gem "htmlentities"
+
+gem 'thinking-sphinx', '2.0.13'
+#gem 'ts-datetime-delta', '1.0.3',:require => 'thinking_sphinx/deltas/datetime_delta'
+#gem 'ts-delayed-delta', '1.1.3',:require => 'thinking_sphinx/deltas/delayed_delta'
+gem 'ts-resque-delta', '~>1.2.2'
+  
+gem 'daemons'
+gem 'whenever', :require => false
+
+gem 'delayed_job_active_record'
+
+gem 'rails_admin'
+
+gem 'unicorn'
+
+gem 'redis'
+gem 'resque'
+gem 'resque-scheduler', :require => 'resque_scheduler'
+gem 'resque-cleaner'

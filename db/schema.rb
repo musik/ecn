@@ -11,7 +11,105 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121004064012) do
+ActiveRecord::Schema.define(:version => 20121006122822) do
+
+  create_table "apps", :force => true do |t|
+    t.string   "domain"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "companies", :force => true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.string   "country"
+    t.string   "state"
+    t.string   "city"
+    t.string   "address"
+    t.string   "opera_address"
+    t.string   "zip"
+    t.string   "phone"
+    t.string   "mobile"
+    t.string   "fax"
+    t.string   "website"
+    t.string   "aliexpress"
+    t.string   "email"
+    t.string   "btypes"
+    t.string   "main_products"
+    t.string   "contact"
+    t.string   "trackback"
+    t.boolean  "fetched"
+    t.binary   "meta"
+    t.text     "description"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.boolean  "delta",         :default => true, :null => false
+    t.integer  "app_id"
+  end
+
+  add_index "companies", ["app_id"], :name => "index_companies_on_app_id"
+  add_index "companies", ["delta"], :name => "index_companies_on_delta"
+  add_index "companies", ["slug"], :name => "index_companies_on_slug"
+  add_index "companies", ["trackback"], :name => "index_trackback"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "kvs", :force => true do |t|
+    t.string "k"
+    t.string "v"
+  end
+
+  add_index "kvs", ["k"], :name => "index_kvs_on_k"
+
+  create_table "products", :force => true do |t|
+    t.string   "title"
+    t.string   "url"
+    t.string   "image_src"
+    t.string   "trackback"
+    t.integer  "company_id"
+    t.boolean  "fetched"
+    t.binary   "price"
+    t.binary   "meta"
+    t.text     "description"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "delta",       :default => true, :null => false
+    t.integer  "app_id"
+  end
+
+  add_index "products", ["app_id"], :name => "index_products_on_app_id"
+  add_index "products", ["company_id"], :name => "imdex_company"
+  add_index "products", ["delta"], :name => "index_products_on_delta"
+  add_index "products", ["trackback"], :name => "index_trackback"
+  add_index "products", ["url"], :name => "index_products_on_url"
+
+  create_table "rails_admin_histories", :force => true do |t|
+    t.text     "message"
+    t.string   "username"
+    t.integer  "item"
+    t.string   "table"
+    t.integer  "month",      :limit => 2
+    t.integer  "year",       :limit => 8
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "rails_admin_histories", ["item", "table", "month", "year"], :name => "index_rails_admin_histories"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -23,6 +121,19 @@ ActiveRecord::Schema.define(:version => 20121004064012) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "topics", :force => true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.integer  "products_count"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "delta",          :default => true, :null => false
+    t.integer  "app_id"
+  end
+
+  add_index "topics", ["app_id"], :name => "index_topics_on_app_id"
+  add_index "topics", ["delta"], :name => "index_topics_on_delta"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

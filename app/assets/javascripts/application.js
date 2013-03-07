@@ -12,5 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
-//= require_tree .
+//= require bootstrap-alert
+
+$(function(){
+  
+})
+function update_count(n,slug){
+  $.post("/" + slug + '/update_count',{count: n})
+}

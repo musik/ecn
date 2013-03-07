@@ -1,0 +1,3 @@
+rake db:rollback
+RAILS_ENV=test rake db:rollback
+

@@ -1,0 +1,18 @@
+-title @company.name
+
+.row
+  .span7
+    -%w(address opera_address zip phone mobile fax website aliexpress email).each do |key|
+      -if @company.send(key).present?
+        %tt #{key.titleize}:
+        =@company.send(key)
+        %br
+  .span3
+    -ps = @company.products.recent.short.limit(11)
+    -if ps.present?
+      %strong Recent products
+      %ul
+        -ps.each do |p|
+          %li=link_to p.title,p
+
+

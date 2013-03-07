@@ -1,0 +1,1 @@
+rake resque:work BACKGROUND=yes PIDFILE=./tmp/delta.pid QUEUE=ts_delta INTERVAL=60

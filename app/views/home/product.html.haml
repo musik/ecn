@@ -1,0 +1,48 @@
+-title @pro.title
+
+.row
+  .span9
+    .gd2
+      = render :partial => 'ads/a1'
+    .row-fluid
+      .photo.span4
+        %img{:src=>@pro.image_src}
+      %address.span8
+        -company = @pro.company
+        -unless company
+          Unverified Supplier
+        -else
+          %strong=company.name
+          %br
+          =company.address
+          %br
+          =company.city_str
+          %br
+          %abbr{:title=>"Phone"} P:
+          =company.phone
+          %br
+          =link_to_external company.website,company.website if url_valid?(company.website)
+
+
+    .clearfix
+
+    .entry-body
+      =sanitize_desc(@pro.description)
+  .span3
+    -topics= Topic.related(@pro.title,10)
+    -if topics.present?
+      .prelated
+        Related topics
+        %ul.unstyled
+          -topics.each do |t|
+            %li=link_to t.name,t.app_url
+    -if params[:debug]
+      =link_to 'source',@pro.trackback
+    -prods=@pro.related
+    -if prods.present?
+      .prods_related
+        Related products
+        %ul.unstyled
+          -prods.each do |p|
+            %li=link_to p.title,p.app_url
+

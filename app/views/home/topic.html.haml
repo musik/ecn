@@ -1,0 +1,24 @@
+-title @topic.title
+
+.row
+  .span9
+    .gd2
+      = render :partial => 'ads/a1'
+    %p.stats
+      ="#{@prods.total_entries} products found (#{@prods.query_time} seconds)"
+    = render :partial => 'list'
+    =nofollow_sub paginate(@prods)
+    .gd2
+      = render :partial => 'ads/a2'
+  .span3
+    =render "ads/sidelink"
+    -#topics= Topic.related(@topic.name,10,@topic.id)
+    -if @related.present?
+      .prelated
+        Related topics
+        %ul.unstyled
+          -@related.each do |t|
+            %li=link_to t.name,t.app_url
+-if @update_count            
+  -content_for :footer do
+    =javascript_tag "update_count(#{@update_count},'#{@topic.slug}')" 

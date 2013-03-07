@@ -1,3 +1,22 @@
-%h3 Home
-- @users.each do |user|
-  %p User: #{link_to user.name, user}
+.row
+  .span7
+    .paddingzero
+      %ul.unstyled
+        %li.nav-header Products
+        -@products.each do |t|
+          %li=link_to t.title,t,:rel=>"nofollow"
+        %li.nav-header Companies
+        -@companies.each do |t|
+          %li=link_to t.name,t,:rel=>"nofollow"
+
+  .span2
+    %ul.unstyled
+      %li.nav-header Popular
+      -@topics1.each do |t|
+        %li=link_to t.name,t
+  .span3
+    %ul.unstyled
+      %li.nav-header Recent
+      -@topics2.each do |t|
+        %li=link_to t.name.truncate(40),t
+

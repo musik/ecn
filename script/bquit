@@ -1,0 +1,3 @@
+kill -QUIT `cat ./tmp/schedule.pid`
+kill -QUIT `cat ./tmp/resque.pid`
+kill -QUIT `cat ./tmp/delta.pid`
