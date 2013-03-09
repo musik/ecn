@@ -30,6 +30,7 @@ db/sphinx/
 /config/config.yml
 /config/*.yml
 /config/database.yml
+/config/resque.yml
 /coverage.data
 /coverage/
 /db/*.javadb/

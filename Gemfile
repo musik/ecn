@@ -16,23 +16,23 @@ gem "database_cleaner", ">= 0.8.0", :group => :test
 #gem "mongoid-rspec", "1.4.6", :group => :test
 gem "factory_girl_rails", ">= 3.5.0", :group => [:development, :test]
 gem "email_spec", ">= 1.2.1", :group => :test
-gem "guard", ">= 0.6.2", :group => :development  
-case HOST_OS
-  when /darwin/i
-    gem 'rb-fsevent', :group => :development
-    gem 'growl', :group => :development
-  when /linux/i
-    gem 'libnotify', :group => :development
-    gem 'rb-inotify', :group => :development
-  when /mswin|windows/i
-    gem 'rb-fchange', :group => :development
-    gem 'win32console', :group => :development
-    gem 'rb-notifu', :group => :development
+
+group :development do
+  gem 'libnotify'
+  gem 'rb-inotify', :require => false
+  gem "guard", ">= 0.6.2"
+  gem "guard-bundler", ">= 0.1.3"
+  gem "guard-rails", ">= 0.0.3"
+  gem "guard-livereload", ">= 0.3.0"
+  gem "guard-rspec", ">= 0.4.3"
+  gem 'capistrano'
+  #gem 'capistrano-ext'
+  gem 'capistrano-recipes'
+  gem 'capistrano-helpers'
+  gem 'rvm-capistrano'
+  gem 'capistrano-unicorn',:git=>'git://github.com/sosedoff/capistrano-unicorn.git'
+  gem 'capistrano-resque'
 end
-gem "guard-bundler", ">= 0.1.3", :group => :development
-gem "guard-rails", ">= 0.0.3", :group => :development
-gem "guard-livereload", ">= 0.3.0", :group => :development
-gem "guard-rspec", ">= 0.4.3", :group => :development
 gem "devise", ">= 2.1.2"
 gem "cancan", ">= 1.6.8"
 gem "rolify", ">= 3.1.0"
