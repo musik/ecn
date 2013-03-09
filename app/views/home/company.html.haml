@@ -1,12 +1,16 @@
 -title @company.name
 
 .row
-  .span7
-    -%w(address opera_address zip phone mobile fax website aliexpress email).each do |key|
-      -if @company.send(key).present?
-        %tt #{key.titleize}:
-        =@company.send(key)
-        %br
+  .span9
+    .gd2
+      = render :partial => 'ads/a1'
+    .ccard
+      -%w(address opera_address zip phone mobile fax website aliexpress email).each do |key|
+        -if @company.send(key).present?
+          %label #{key.titleize}:
+          =@company.send(key)
+          %br
+    .clearfix
   .span3
     -ps = @company.products.recent.short.limit(11)
     -if ps.present?

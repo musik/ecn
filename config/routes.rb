@@ -13,8 +13,15 @@ Ecn::Application.routes.draw do
   match '/popular'=>"home#popular",:as=>:popular
   match '/p-:product_url'=>"home#product",:as=>:product
   match '/c-:company_url'=>"home#company",:as=>:company
+
+  resque_constraint = lambda do |request|
+    Rails.env.development? or 
+      (request.env['warden'].authenticate? and request.env['warden'].user.has_role?(:admin))
+  end
+  constraints resque_constraint do
+    mount Resque::Server.new, :at => "/resque"
+  end
   match '/:topic_name/update_count'=>"home#update_count",:as=>:update_count,:via=>:post
   match '/:topic_name'=>"home#topic",:as=>:topic
-
   root :to => "home#index"
 end

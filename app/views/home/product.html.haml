@@ -3,7 +3,11 @@
 .row
   .span9
     .gd2
-      = render :partial => 'ads/a1'
+      .pull-left
+        = render :partial => 'ads/a1'
+      .pull-left.ml2e
+        = render :partial => 'ads/a2'
+      .clearfix
     .row-fluid
       .photo.span4
         %img{:src=>@pro.image_src}
@@ -12,7 +16,7 @@
         -unless company
           Unverified Supplier
         -else
-          %strong=company.name
+          %strong=link_to company.name,company.app_url
           %br
           =company.address
           %br
@@ -28,6 +32,8 @@
 
     .entry-body
       =sanitize_desc(@pro.description)
+    .gd1
+      = render :partial => 'ads/eb_center'
   .span3
     -topics= Topic.related(@pro.title,10)
     -if topics.present?

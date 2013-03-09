@@ -1,2 +1,2 @@
 
-rsync -avzP /home/muzik/as3/ecn zzrt:~/www/ --exclude "log/" --exclude "tmp/" --exclude "tmp2/" --exclude "Gemfile.lock" --exclude "*.sql" --exclude "database.yml" --exclude "*cache" --exclude "public/cache" --exclude ".git" --exclude "db/sphinx" --exclude  "public/uploads" --exclude "public/xml" --exclude "script/xml.sh"
+rsync -avzP /home/muzik/as3/ecn nrt:~/www/ --exclude "log/" --exclude "tmp/" --exclude "tmp2/" --exclude "Gemfile.lock" --exclude "*.sql" --exclude "database.yml" --exclude "*cache" --exclude "public/cache" --exclude ".git" --exclude "db/sphinx" --exclude  "public/uploads" --exclude "public/xml" --exclude "script/xml.sh"

@@ -1,9 +1,13 @@
-
+-adpos = 5
 -if @isor
   .instead-or=t('pages.search.or_instead',:old=>@topic.name,:new=>@topic.name.gsub(/ /,' | ')).html_safe
 
     
--@prods.each do |p|
+-@prods.each_index do |i|
+  -p = @prods[i]
+  -if i==adpos
+    .gd3
+      = render :partial => 'ads/eb_center'
   .hproduct
     %h3.fn
       =link_to highlight(p.title.capitalize,@name,:highlighter=>'<span class="highlight">\1</span>'),p.app_url,:rel=>:nofollow
