@@ -65,3 +65,5 @@ gem 'redis'
 gem 'resque'
 gem 'resque-scheduler', :require => 'resque_scheduler'
 gem 'resque-cleaner'
+
+gem 'god'
