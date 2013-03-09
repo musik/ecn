@@ -44,20 +44,20 @@ Capistrano::Configuration.instance.load do
   # Unicorn 
   #------------------------------------------------------------------------------
   namespace :unicorn do    
-    #desc "|DarkRecipes| Starts unicorn directly"
-    #task :start, :roles => :app do
-      #run unicorn_start_cmd
-    #end  
+    desc "|DarkRecipes| Starts unicorn directly"
+    task :start, :roles => :app do
+      run unicorn_start_cmd
+    end  
     
-    #desc "|DarkRecipes| Stops unicorn directly"
-    #task :stop, :roles => :app do
-      #run unicorn_stop_cmd
-    #end  
+    desc "|DarkRecipes| Stops unicorn directly"
+    task :stop, :roles => :app do
+      run unicorn_stop_cmd
+    end  
     
-    #desc "||DarkRecipes|| Restarts unicorn directly"
-    #task :restart, :roles => :app do
-      #run unicorn_restart_cmd
-    #end
+    desc "||DarkRecipes|| Restarts unicorn directly"
+    task :restart, :roles => :app do
+      run unicorn_restart_cmd
+    end
     
     desc <<-EOF
     |DarkRecipes| Parses the configuration file through ERB to fetch our variables and \

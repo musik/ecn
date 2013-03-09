@@ -10,11 +10,13 @@ Capistrano::Configuration.instance.load do
       #upload './config/application.yml', "#{shared_path}/config/application.yml"
       #upload './config/settings.yml', "#{shared_path}/config/settings.yml"
       #upload './config/taobaorb.yml', "#{shared_path}/config/taobaorb.yml"
+      upload './config/resque.yml', "#{shared_path}/config/resque.yml"
     end 
     task :symlink do
       run "if [ ! -d '#{shared_path}/html' ]; then mkdir #{shared_path}/html; fi;"
       run "rm -rf #{release_path}/public/cache && ln -nfs #{shared_path}/html #{release_path}/public/cache"
       run "rm -rf #{release_path}/config/database.yml && ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+      run "rm -rf #{release_path}/config/resque.yml && ln -nfs #{shared_path}/config/resque.yml #{release_path}/config/resque.yml"
       #run "rm -rf #{release_path}/config/application.yml && ln -nfs #{shared_path}/config/application.yml #{release_path}/config/application.yml"
       #run "rm -rf #{release_path}/config/settings.yml && ln -nfs #{shared_path}/config/settings.yml #{release_path}/config/settings.yml"
       #run "rm -rf #{release_path}/config/taobaorb.yml && ln -nfs #{shared_path}/config/taobaorb.yml #{release_path}/config/taobaorb.yml"

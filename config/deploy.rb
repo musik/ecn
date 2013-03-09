@@ -89,7 +89,7 @@ after "deploy:create_symlink","unicorn:symlink"
 after 'deploy:start','unicorn:start'
 after 'deploy:restart', 'unicorn:restart' # app IS NOT preloaded
 #require 'recipes/unicorn'
-require 'capistrano-unicorn'
+#require 'capistrano-unicorn'
 
 #Resque
 
