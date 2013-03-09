@@ -1,0 +1,9 @@
+development:
+  port: 9316
+  indexed_models:
+    - Topic
+    - Product
+test:
+  port: 9313
+production:
+  port: 9316

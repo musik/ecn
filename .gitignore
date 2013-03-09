@@ -28,7 +28,7 @@ db/sphinx/
 .redcar/
 .sass-cache
 /config/config.yml
-/config/*.yml
+#/config/*.yml
 /config/database.yml
 /config/resque.yml
 /coverage.data
