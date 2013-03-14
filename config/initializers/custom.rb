@@ -17,3 +17,5 @@ APPS = App.all_hash# if Rails.env.production?
 SUBD = Rails.env.production? ? "www" : "lo"
 
 
+#ThinkingSphinx::Deltas::ResqueDelta::DeltaJob= 30 # seconds
+#ThinkingSphinx::Deltas::ResqueDelta.throttle_interval= 30

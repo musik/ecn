@@ -64,6 +64,12 @@ class Topic < ActiveRecord::Base
   end
   #handle_asynchronously :update_products_count_in_future, :run_at => Proc.new { 70.minutes.from_now }
 
+  class SmartIndex
+    @queue = "si"
+    def self.perform
+      ThinkingSphinx::Deltas::ResqueDelta::CoreIndex.new.smart_index
+    end
+  end
   class TopicQu
     @queue = "topic_update"
     def self.perform

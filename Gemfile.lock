@@ -225,7 +225,7 @@ GEM
       vegas (~> 0.1.2)
     resque-cleaner (0.2.10)
       resque (~> 1.0)
-    resque-lock-timeout (0.3.3)
+    resque-lock-timeout (0.4.1)
       resque (>= 1.8.0)
     resque-scheduler (2.0.0)
       redis (>= 2.0.1)
@@ -289,9 +289,9 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    ts-resque-delta (1.2.2)
+    ts-resque-delta (1.2.4)
       resque (~> 1.10)
-      resque-lock-timeout (~> 0.3.1)
+      resque-lock-timeout (~> 0.4)
       riddle (>= 1.5)
       thinking-sphinx (>= 1.4.1)
     twitter-stream (0.1.16)
@@ -365,7 +365,7 @@ DEPENDENCIES
   stringex
   therubyracer
   thinking-sphinx (= 2.0.13)
-  ts-resque-delta (~> 1.2.2)
+  ts-resque-delta (~> 1.2.4)
   typhoeus
   uglifier (>= 1.0.3)
   unicorn

@@ -2,16 +2,26 @@ rails_env   = ENV['RAILS_ENV']  || "production"
 rails_root  = ENV['RAILS_ROOT'] || "/home/muzik/ecn/current"
 num_workers = rails_env == 'production' ? 1 : 1
 
+God.watch do |w|
+  w.log      = "#{rails_root}/log/god.log"
+  w.dir      = "#{rails_root}"
+  w.name     = "resque-ecn-scheduler"
+  w.group    = 'resque-ecn'
+  w.interval = 60.seconds
+  w.start    = "cd #{rails_root} && RAILS_ENV=#{rails_env} bundle exec rake resque:scheduler"
+  w.keepalive
+end
 num_workers.times do |num|
   God.watch do |w|
     w.log      = "#{rails_root}/log/god.log"
     w.dir      = "#{rails_root}"
-    w.name     = "resque-#{num}"
-    w.group    = 'resque'
+    w.name     = "resque-ecn-#{num}"
+    w.group    = 'resque-ecn'
     w.interval = 30.seconds
     #w.env      = {"QUEUE"=>"word", "RAILS_ENV"=>rails_env}
-    w.start    = "cd #{rails_root} && RAILS_ENV=#{rails_env} bundle exec rake resque:work QUEUE=ts_delta,topic_update,schedule,com_data,product,topic"
-    #w.start    = "bundle exec rake resque:work"
+    #w.start    = "cd #{rails_root} && RAILS_ENV=#{rails_env} bundle exec rake resque:work QUEUE=ts_delta,topic_update,schedule,com_data,product,topic"
+    w.start    = "cd #{rails_root} && RAILS_ENV=#{rails_env} bundle exec rake resque:work QUEUE=topic_update,schedule,com_data,product,topic"
+#    w.start    = "bundle exec rake resque:work"
 
 #    w.uid = 'muzik'
 #    w.gid = 'muzik'

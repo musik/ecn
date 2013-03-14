@@ -7,6 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 User.destroy_all   
 puts 'SETTING UP DEFAULT USER LOGIN'
-user = User.create! :name => 'muzik', :email => '58265826@qq.com', :password => 'angela00', :password_confirmation => 'angela00', :confirmed_at => Time.now.utc
+user = User.create! :name => 'muzik', :email => '58265826@qq.com', :password => 'PASSWORD', :password_confirmation => 'PASSWORD', :confirmed_at => Time.now.utc
 puts 'New user created: ' << user.name
 user.add_role :admin
