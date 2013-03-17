@@ -6,9 +6,9 @@ set :repository,  "git@github.com:musik/ecn.git"
 set :scm, :git
 
 set :deploy_to, "/home/muzik/ecn"
-role :web, "rho"                          # Your HTTP server, Apache/etc
-role :app, "rho"                          # This may be the same as your `Web` server
-role :db,  "rho", :primary => true # This is where Rails migrations will run
+role :web, "rho3"                          # Your HTTP server, Apache/etc
+role :app, "rho3"                          # This may be the same as your `Web` server
+role :db,  "rho3", :primary => true # This is where Rails migrations will run
 #role :db,  "your slave db-server here"
 set :user, "muzik"
 set :group, "muzik"

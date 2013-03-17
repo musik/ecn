@@ -16,7 +16,7 @@ namespace :init do
   end
   desc "init topics" 
   task :topics => :environment do
-    Ali::Core.new.reset_urls
+    #Ali::Core.new.reset_urls
     Ali::Core.new.prepare
   end
   desc "init fix apps" 
