@@ -5,7 +5,7 @@
   <% end %>
   # <%= application %> Server
   server {
-      listen <%= application_port %>;
+      #listen <%= application_port %>;
       <% if is_using_passenger %>
       rails_env <%= rails_env %>;
       passenger_enabled on;
@@ -20,8 +20,8 @@
 
       # path for static files
       root <%= deploy_to %>/current/public;
-      access_log <%= deploy_to %>/current/log/access.log main;
-      error_log  <%= deploy_to %>/current/log/error.log info;
+      access_log <%= deploy_to %>/shared/log/access.log;
+      error_log  <%= deploy_to %>/shared/log/error.log info;
 
       # this rewrites all the requests to the maintenance.html
       # page if it exists in the doc root. This is for capistrano's
@@ -46,18 +46,6 @@
         proxy_pass http://<%= application %>_app_server;
         break;
         <% end %>
-      }
-      
-      # Now this supposedly should work as it gets the filenames with querystrings that Rails provides.
-      # BUT there's a chance it could break the ajax calls.
-      location ~* \.(ico|css|gif|jpe?g|png)(\?[0-9]+)?$ {
-         expires max;
-         break;
-      }
-      
-      location ~ ^/javascripts/.*\.js(\?[0-9]+)?$ {
-         expires max;
-         break;
       }
       
       # Now this supposedly should work as it gets the filenames with querystrings that Rails provides.
@@ -112,8 +100,8 @@
     client_max_body_size    50M;
     
     root <%= deploy_to %>/current/public;
-    access_log <%= deploy_to %>/current/log/nginx.access.log main;
-    error_log  <%= deploy_to %>/current/log/nginx.error.log info;
+    access_log <%= deploy_to %>/shared/log/nginx.access.log main;
+    error_log  <%= deploy_to %>/shared/log/nginx.error.log info;
 
     # this rewrites all the requests to the maintenance.html
     # page if it exists in the doc root. This is for capistrano's

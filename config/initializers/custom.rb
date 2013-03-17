@@ -13,7 +13,7 @@ class String
   end
 end
 
-APPS = App.all_hash# if Rails.env.production?
+APPS = App.all_hash rescue nil# if Rails.env.production? 
 SUBD = Rails.env.production? ? "www" : "lo"
 
 

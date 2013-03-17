@@ -28,9 +28,10 @@ Capistrano::Configuration.instance.load do
     end
   end
   namespace :nginx do
-    #task :reload, :roles => :app , :except => { :no_release => true } do
-      #sudo "service nginx reload"
-    #end
+    task :restart2, :roles => :app , :except => { :no_release => true } do
+      set :user,'root'
+      run "service nginx restart"
+    end
   end
   namespace :ss do
     task :rvm,:roles => :app do
