@@ -17,10 +17,10 @@ module Ali
   end
   def clean_urls
     @redis ||= Resque.redis
-    #key = 'aliurls'
-    #@redis.smembers(key).each do |str|
-      #@redis.srem(key,str) if is_dirty_url? str
-    #end
+    key = 'aliurls'
+    @redis.smembers(key).each do |str|
+      @redis.srem(key,str) if is_dirty_url? str
+    end
   end
   def clean_topic_jobs
     @redis ||= Resque.redis

@@ -67,7 +67,7 @@ class Topic < ActiveRecord::Base
   class SmartIndex
     @queue = "si"
     def self.perform
-      ThinkingSphinx::Deltas::ResqueDelta::CoreIndex.new.smart_index
+      Resque::Job.reserve('ts_delta').perform
     end
   end
   class TopicQu
