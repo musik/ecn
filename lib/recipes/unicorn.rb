@@ -38,7 +38,13 @@ Capistrano::Configuration.instance.load do
   end
   
   def unicorn_restart_cmd
-    "kill -USR2 `cat #{unicorn_pid}`"
+    <<-CMD
+    if [ -f '#{unicorn_pid}' ];then
+      kill -USR2 `cat #{unicorn_pid}`;
+    else
+      #{unicorn_start_cmd};
+    fi;
+    CMD
   end
 
   # Unicorn 
