@@ -5,8 +5,9 @@ Capistrano::Configuration.instance.load do
       run "cd #{current_path} && bundle exec god -c god/resque.god"
     end
     desc "|DarkRecipes| restart the god"
-    task :god_reset, :roles => :app do
-      run "kill `cat ~/.god/pids/resque-0.pid`"
+    task :god_reload, :roles => :app do
+      run "kill -QUIT `cat ~/.god/pids/resque-ecn-0.pid`"
+      run "kill -QUIT `cat ~/.god/pids/resque-ecn-delta.pid`"
       #run "cd #{current_path} && bundle exec god -c god/resque.god"
     end
     namespace :worker do

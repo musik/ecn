@@ -12,12 +12,33 @@ module Ali
     parse_topic_links doc
   end
   def reset_urls
-    @redis ||= Redis::Namespace.new("resque:ali",:redis=>Resque.redis.redis)
-    @redis.del "urls"
+    @redis ||= Resque.redis
+    @redis.del "aliurls"
+  end
+  def clean_urls
+    @redis ||= Resque.redis
+    #key = 'aliurls'
+    #@redis.smembers(key).each do |str|
+      #@redis.srem(key,str) if is_dirty_url? str
+    #end
+  end
+  def clean_topic_jobs
+    @redis ||= Resque.redis
+    key = 'queue:topic'
+    size =  @redis.llen key
+    Range.new(0,size).each do |i|
+      val = @redis.lindex(key,i)
+      next if val.nil?
+      val = JSON.parse(val)
+      next if is_category_url? val["args"].first
+      Resque::Job.destroy('topic',val["class"],*(val["args"]))
+    end
+    
+
   end
   def url_exist? url
-    @redis ||= Redis::Namespace.new("resque:ali",:redis=>Resque.redis.redis)
-    key = 'urls'
+    @redis ||= Resque.redis
+    key = 'aliurls'
     val = url.match(/http\:\/\/[^\/]+\/(.+)$/)[1]
     return true if @redis.sismember key,val
     @redis.sadd key,val
@@ -117,7 +138,10 @@ module Ali
     (url =~ /www.alibaba.com\/[\w-]+_pid\d+$/ or url =~ /www.alibaba.com\/showroom\/[\w-]+.html$/).present? and url.match(/www.alibaba.com\/showroom\/showroom(-\w)*.html/).nil?
   end
   def is_category_url? url
-      url.match(/www.alibaba.com\/[a-z\-]+_p(id)*\d+/i).present?
+      url.match(/www.alibaba.com\/[a-z\-]+_p(id)*\d+$/i).present?
+  end
+  def is_dirty_url? url
+      url.match(/^[a-z\-]+_p(id)*\d+(_\d+|\?)/i).present?
   end
   def fetch_url url
     response = Typhoeus::Request.get(url,:headers=>{"Referer"=>"http://www.alibaba.com","User-Agent"=>"Soso"})

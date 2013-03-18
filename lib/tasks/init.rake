@@ -29,4 +29,9 @@ namespace :init do
       p.products.update_all :app_id=>p.app_id
     end
   end
+  desc "fix aliurls" 
+  task :fix_aliurls => :environment do
+    Ali::Core.new.clean_urls
+    Ali::Core.new.clean_topic_jobs
+  end
 end

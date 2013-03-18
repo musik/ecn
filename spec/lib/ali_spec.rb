@@ -35,10 +35,21 @@ describe Ali do
     ali.is_topic_url?("http://www.alibaba.com/showroom/showroom.html").should eql(false)
     ali.is_category_url?("http://www.alibaba.com/Cocoa-Beans_pid10502").should eql(true)
     ali.is_category_url?("http://www.alibaba.com/Agriculture_p1").should eql(true)
+    ali.is_category_url?("http://www.alibaba.com/Agriculture_p1_2").should eql(false)
+    ali.is_category_url?("http://www.alibaba.com/Agriculture_p1?tracelog").should eql(false)
     ali.is_topic_url?("http://www.alibaba.com/showroom/category/21/Office-%2526-School-Supplies.html").should eql(false)
+
+    ali.is_dirty_url?("Agriculture_p1").should eql(false)
+    ali.is_dirty_url?("Agriculture_p1_2").should eql(true)
+    ali.is_dirty_url?("Agriculture_p1?tracelog").should eql(true)
 
     #ali.url_exist?("http://www.alibaba.com/showroom/category.html").should eql(false)
     ali.url_exist?("http://www.alibaba.com/showroom/category.html").should eql(true)
     
+  end
+  it "should clean " do
+    #Ali::Core.new.clean_topic_jobs
+      #ali = Ali::Core.new
+      #ali.clean_urls
   end
 end
