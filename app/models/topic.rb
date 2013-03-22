@@ -13,10 +13,14 @@ class Topic < ActiveRecord::Base
 
   scope :popular,order("products_count desc")
   scope :recent,order("id desc")
-  scope :short,select([:name,:slug])
+  scope :short,select([:name,:slug,:app_id])
   scope :present,where('products_count > 0 ')
   #scope :related,lambda{|str,limit|}
   before_save :set_delta_flag
+  scope :random,lambda{|limit|
+    ids = search_for_ids :sort_by=>'@random',:per_page=>limit
+    ids.present? ? where(:id=>ids).short : []
+  }
 
   def set_delta_flag
     if changes["products_count"].present?
@@ -47,6 +51,15 @@ class Topic < ActiveRecord::Base
    #set_property :delta => :datetime, :threshold => 70.minutes 
     
   end
+  def self.xearch *args
+    ids = search_for_ids *args
+    ids.present? ? where(:id=>ids) : []
+  end
+  def self.quick_search q,limit=10
+    search q,
+      :match_mode=>:any,
+      :per_page=>limit
+  end
   def to_param
     slug
   end
@@ -68,6 +81,9 @@ class Topic < ActiveRecord::Base
     @queue = "si"
     def self.perform
       Resque::Job.reserve('ts_delta').perform
+      #while job = Resque::Job.reserve('ts_delta')
+        #job.perform
+      #end
     end
   end
   class TopicQu

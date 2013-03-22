@@ -40,6 +40,7 @@ class HomeController < ApplicationController
         :sort_mode => :extended,
         :order => "@relevance DESC",
         :per_page=>10)
+    @random = Topic.random(10)
 
   end
   def update_count

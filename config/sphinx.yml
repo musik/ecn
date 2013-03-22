@@ -3,6 +3,7 @@ development:
   indexed_models:
     - Topic
     - Product
+    - Company
 test:
   port: 9313
 production:

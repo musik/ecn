@@ -18,5 +18,11 @@
       %ul
         -ps.each do |p|
           %li=link_to p.title,p
+    -cs = @company.related
+    -if response.present?
+      %strong Related companies
+      %ul 
+        -cs.each do |c|
+          %li=link_to c.name,c
 
 

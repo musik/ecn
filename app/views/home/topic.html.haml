@@ -19,6 +19,12 @@
         %ul.unstyled
           -@related.each do |t|
             %li=link_to t.name,t.app_url
+    -if @random.present?
+      .prelated
+        Random
+        %ul.unstyled
+          -@random.each do |t|
+            %li=link_to t.name,t.app_url
 -if @update_count            
   -content_for :footer do
     =javascript_tag "update_count(#{@update_count},'#{@topic.slug}')" 

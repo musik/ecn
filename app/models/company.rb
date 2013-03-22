@@ -7,6 +7,20 @@ class Company < ActiveRecord::Base
   scope :recent,order("id desc")
   scope :short,select([:name,:slug])
   before_create :setapp
+  scope :quick_search,lambda{|q,limit,options={}|
+    search q,{:match_mode=>:any,:per_page=>limit}.merge(options).to_options
+  }
+  define_index do
+    indexes name
+    indexes description
+    indexes country,state,city
+    has id
+    set_property :delta => ThinkingSphinx::Deltas::ResqueDelta
+  end
+  def related limit=10,short=true
+    ids = self.class.search_for_ids name,:match_mode=>:any,:per_page=>limit,:without=>{:id=>id}
+    self.class.where(:id=>ids).short
+  end
   def setapp
     self.app = APPS[APPS.keys.sample]
   end
