@@ -1,5 +1,13 @@
 class HomeController < ApplicationController
   include ApplicationHelper
+  def status
+    @data = {
+      :topic => Topic.count,
+      :company => Company.count,
+      :product => Product.count
+    }
+    render :json=>@data
+  end
   def index
       @topics1 = @current_app.topics.popular.limit(30)
       @topics2 = @current_app.topics.recent.present.limit(30)

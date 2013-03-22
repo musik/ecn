@@ -22,6 +22,7 @@ Ecn::Application.routes.draw do
     mount Resque::Server.new, :at => "/resque"
   end
   match '/:topic_name/update_count'=>"home#update_count",:as=>:update_count,:via=>:post
+  match '/status'=>"home#status",:as=>:status
   match '/:topic_name'=>"home#topic",:as=>:topic
   root :to => "home#index"
 end
