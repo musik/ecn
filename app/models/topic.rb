@@ -18,7 +18,8 @@ class Topic < ActiveRecord::Base
   #scope :related,lambda{|str,limit|}
   before_save :set_delta_flag
   scope :random,lambda{|limit|
-    ids = search_for_ids :sort_by=>'@random',:per_page=>limit
+    ids = search_for_ids :order=>"@random",:per_page=>limit,
+        :without=>{:products_count=>0}
     ids.present? ? where(:id=>ids).short : []
   }
 

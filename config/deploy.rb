@@ -96,7 +96,7 @@ after 'deploy:restart', 'unicorn:restart' # app IS NOT preloaded
 
 set :resque_service,'resque-ecn'
 require './lib/recipes/resque.rb'
-#before 'deploy:restart','resque:restart'
+before 'deploy:restart','resque:worker:restart'
 #role :resque_worker, "rho"
 #role :resque_scheduler, "rho"
 #set :workers, { "update_keywords,update_items" => 1 }
