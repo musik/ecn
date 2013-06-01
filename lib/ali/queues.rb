@@ -18,5 +18,11 @@ module Ali
         Ali::Core.new.fetch_topic url
       end
     end
+    class TopicFindQ
+      @queue = "topic"
+      def self.perform url
+        Ali::Core.new.fetch_topic url,false
+      end
+    end
   end
 end

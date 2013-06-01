@@ -104,7 +104,7 @@ class Topic < ActiveRecord::Base
     end
     def rescan_all
       find_each do |r|
-        Resque.enqueue Queues::TopicQ,r.ali_url      
+        Resque.enqueue Ali::Queues::TopicFindQ,r.ali_url      
       end
     end
     #def perform id

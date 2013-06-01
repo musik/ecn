@@ -8,6 +8,12 @@ Capistrano::Configuration.instance.load do
     task :god_reload, :roles => :app do
       run "kill -QUIT `cat ~/.god/pids/resque-ecn-0.pid`"
       #run "kill -QUIT `cat ~/.god/pids/resque-ecn-delta.pid`"
+      #run "cd #{current_path} && bundle exec god -c god/resque.god"
+    end
+    task :restart do
+      run "cd #{current_path} &&  bundle exec god stop #{resque_service}"
+      #run "kill -QUIT `cat ~/.god/pids/resque-ecn-0.pid`"
+      #run "kill -QUIT `cat ~/.god/pids/resque-ecn-scheduler.pid`"
       run "cd #{current_path} && bundle exec god -c god/resque.god"
     end
     namespace :worker do
@@ -23,12 +29,12 @@ Capistrano::Configuration.instance.load do
     
       desc "|DarkRecipes| Stops the workers"
       task :stop, :roles => :app do
-        run "cd #{current_path} &&  god stop #{resque_service}"
+        run "cd #{current_path} &&  bundle exec god stop #{resque_service}"
       end
     
       desc "|DarkRecipes| Restart all workers"
       task :restart, :roles => :app do
-        run "cd #{current_path} && bundle exec god restart #{resque_service}"
+        #run "cd #{current_path} && bundle exec god restart #{resque_service}"
       end  
     end
   

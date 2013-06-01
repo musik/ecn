@@ -96,14 +96,14 @@ module Ali
       end
     end
   end
-  def fetch_topic url
+  def fetch_topic url,find_products = true
       doc = fetch_url url
       if doc
           name = doc.title.match(/^[^,]+/).to_s.downcase
           return if name.count(" ") > 3
           topic = Topic.where(:name=>name).first_or_create
           #parse_company_links doc
-          parse_product_links doc
+          parse_product_links doc if find_products
           parse_topic_links doc
           topic
       end
