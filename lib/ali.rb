@@ -50,10 +50,11 @@ module Ali
       urls = []
       doc.css('a').each do |link|
         next unless link.attr("href").present?
-        urls << link.attr("href") if is_category_url?(link.attr("href"))
-        #urls << link.attr("href") if is_topic_url?(link.attr("href"))
+        #urls << link.attr("href") if is_category_url?(link.attr("href"))
+        urls << link.attr("href") if is_topic_url?(link.attr("href"))
       end
       urls.uniq.each do |href|
+        #mylog href
         next if url_exist? href
         Resque.enqueue Queues::TopicQ,href      
         #next if Kv.find_by_k(href).present?

@@ -75,6 +75,9 @@ class Topic < ActiveRecord::Base
   def update_products_count_in_future
     #update_products_count
   end
+  def ali_url
+    "http://www.alibaba.com/showroom/#{slug}.html"
+  end
   #handle_asynchronously :update_products_count_in_future, :run_at => Proc.new { 70.minutes.from_now }
 
   class SmartIndex
@@ -97,6 +100,11 @@ class Topic < ActiveRecord::Base
       where(:products_count=>0).find_each do |t|
         #Resque.enqueue Topic,t.id 
         t.update_products_count
+      end
+    end
+    def rescan_all
+      find_each do |r|
+        Resque.enqueue Queues::TopicQ,r.ali_url      
       end
     end
     #def perform id
