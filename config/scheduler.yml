@@ -1,5 +1,6 @@
 update_products_count_of_empty:
-  cron: "52 * * * *"
+  #cron: "52 * * * *"
+  every: 3m
   class: Topic::TopicQu
   queue: schedule
   description: "更新Products count"
