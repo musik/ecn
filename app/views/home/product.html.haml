@@ -11,7 +11,8 @@
         .clearfix
     .row-fluid
       .photo.span4
-        %img{:src=>@pro.image_src}
+        -if @is_adult.nil?
+          %img{:src=>@pro.image_src} 
       %address.span8
         -company = @pro.company
         -unless company
@@ -32,7 +33,9 @@
     .clearfix
 
     .entry-body
-      =sanitize_desc(@pro.description)
+      -tags = %w(table tr td p strong)
+      -tags << 'img' if @is_adult.nil?
+      =sanitize(sanitize_desc(@pro.description),:tags=>tags)
     -if @is_adult.nil?
       .gd1
         = render :partial => 'ads/eb_center'
