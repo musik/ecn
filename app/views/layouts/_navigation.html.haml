@@ -1,4 +1,8 @@
 = link_to @current_app.name, root_url, :class => 'brand',:rel=>"nofollow"
+%form.navbar-search.pull-left{:action=>'/search',:method=>'get'}
+  -a={:id=>'q',:type=>"text",:name=>"q"}
+  -a.merge! @q.nil?  ? {:placeholder=>'Search'} : {:value=>@q}
+  %input.search-query{a}
 %ul.nav
   %li=link_to 'Recent','/recent'
   %li=link_to 'Popular','/popular'

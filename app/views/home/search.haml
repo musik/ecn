@@ -1,6 +1,27 @@
--title @title || "Recent"
+-title @title || "search"
 
-=paginate @topics,:window=>10
-.topics
-  -@topics.each do |t|
-    =link_to t.name,t.app_url,:class=>cycle("small","big")
+.row
+  .span9
+    -if @is_adult.nil?
+      .gd2= render :partial => 'ads/a1'
+    %p.stats
+      ="#{@prods.total_entries} products found (#{@prods.query_time} seconds)"
+    = render :partial => 'list'
+    =nofollow_sub paginate(@prods)
+    -if @is_adult.nil?
+      .gd2= render :partial => 'ads/a2'
+  .span3
+    =render "ads/sidelink" if @is_adult.nil?
+    -if @topics.present?
+      .prelated
+        Related topics
+        %ul.unstyled
+          -@topics.each do |t|
+            %li=link_to t.name,t.app_url
+    -if @random.present?
+      .prelated
+        Random
+        %ul.unstyled
+          -@random.each do |t|
+            %li=link_to t.name,t.app_url
+

@@ -39,14 +39,24 @@ class HomeController < ApplicationController
   end
   def search
     @q = params[:q]
+    _check_adult @q
+    @prods = cache "search-#{@q}-show-#{params[:page]}",:expires_in=>1.day do
+      Product.search(@q,
+        :page=>params[:page],
+        :include=>[:company],
+        :sort_mode => :extended,
+        :order => "@relevance DESC,created_at DESC",
+        :per_page => 20
+        )
+    end
     @topics = Topic.search(@q,
-        #:without => {:products_count=>0}, 
+        :without => {:products_count=>0}, 
         :match_mode => :any,
         :sort_mode => :extended,
         :includes => [:app],
         :order => "@relevance DESC",
         :page=> params[:page],
-        :per_page=>100)
+        :per_page=>20)
     @title = "search '#{@q}'"
   end
 
