@@ -24,7 +24,7 @@ Capistrano::Configuration.instance.load do
     
       desc "|DarkRecipes| Starts the workers"
       task :start, :roles => :app do
-        run "cd #{current_path} && god start #{resque_service}"
+        run "cd #{current_path} && bundle exec god start #{resque_service}"
       end
     
       desc "|DarkRecipes| Stops the workers"

@@ -2,16 +2,16 @@
 
 .row
   .span9
-    .gd2
-      = render :partial => 'ads/a1'
+    -if @is_adult.nil?
+      .gd2= render :partial => 'ads/a1'
     %p.stats
       ="#{@prods.total_entries} products found (#{@prods.query_time} seconds)"
     = render :partial => 'list'
     =nofollow_sub paginate(@prods)
-    .gd2
-      = render :partial => 'ads/a2'
+    -if @is_adult.nil?
+      .gd2= render :partial => 'ads/a2'
   .span3
-    =render "ads/sidelink"
+    =render "ads/sidelink" if @is_adult.nil?
     -#topics= Topic.related(@topic.name,10,@topic.id)
     -if @related.present?
       .prelated

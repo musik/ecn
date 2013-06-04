@@ -69,3 +69,7 @@ gem 'resque-cleaner'
 gem 'resque-pool'
 
 gem 'god'
+
+#gem 'naive_bayes'
+#gem 'bayes_motel'
+gem 'stemmer'

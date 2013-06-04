@@ -23,6 +23,32 @@ class HomeController < ApplicationController
     @title = 'Popular'
     render :action=>'topics'
   end
+  def test
+    @classify = NaiveBayes.new [:adult,:normal]
+    #@classify = NaiveBayes.new :adult,:normal
+    @topics2 = Topic.limit(30).all
+    @topics = Topic.search('sex vagina penis anus pussy ass viagra vibrator dildos lubes adult inflatable toys breast enlargement',:per_page=>20,:match_mode=>:any)
+    @products = Product.search('sex vagina penis anus pussy ass viagra vibrator dildos lubes adult inflatable toys breast enlargement',:per_page=>20,:match_mode=>:any)
+    @products2 = Product.limit(30).all
+    #@products.each do |t|
+      #@classify.train :adult,t.title
+    #end
+    #@products2.each do |t|
+      #@classify.train :normal,t.title
+    #end
+  end
+  def search
+    @q = params[:q]
+    @topics = Topic.search(@q,
+        #:without => {:products_count=>0}, 
+        :match_mode => :any,
+        :sort_mode => :extended,
+        :includes => [:app],
+        :order => "@relevance DESC",
+        :page=> params[:page],
+        :per_page=>100)
+    @title = "search '#{@q}'"
+  end
 
   def topic
     @topic = Topic.find_by_slug params[:topic_name]
@@ -66,9 +92,10 @@ class HomeController < ApplicationController
   end
   def _check_adult str
     if is_adult? str
-      @title = str
-      render "home/adult",:status=>410
-      return
+      @is_adult = true
+      #@title = str
+      #render "home/adult",:status=>410
+      #return
     end
   end
 end

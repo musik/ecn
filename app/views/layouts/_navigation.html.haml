@@ -2,4 +2,4 @@
 %ul.nav
   %li=link_to 'Recent','/recent'
   %li=link_to 'Popular','/popular'
--#= render :partial => 'users/nav'
+= render :partial => 'users/nav' if Rails.env.development?

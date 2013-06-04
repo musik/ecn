@@ -5,7 +5,7 @@
     
 -@prods.each_index do |i|
   -p = @prods[i]
-  -if i==adpos
+  -if @is_adult.nil? and  i==adpos
     .gd3
       = render :partial => 'ads/eb_center'
   .hproduct

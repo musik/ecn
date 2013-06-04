@@ -1,0 +1,6 @@
+-title @title || "Recent"
+
+=paginate @topics,:window=>10
+.topics
+  -@topics.each do |t|
+    =link_to t.name,t.app_url,:class=>cycle("small","big")

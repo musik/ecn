@@ -1,0 +1,26 @@
+-data = YAML.dump(@classify)
+-@classify = YAML.load data
+%h2 adult
+-@topics.each do |t|
+  %li
+    =t.name
+    \|
+    =@classify.classify t.name
+%h2 products
+-@products.each do |t|
+  %li
+    =t.title
+    \|
+    =@classify.classify t.title
+%h2 normal    
+-@topics2.each do |t|
+  %li
+    =t.name
+    \|
+    =@classify.classify t.name
+%h2 products
+-@products2.each do |t|
+  %li
+    =t.title
+    \|
+    =@classify.classify t.title

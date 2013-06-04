@@ -2,12 +2,13 @@
 
 .row
   .span9
-    .gd2
-      .pull-left
-        = render :partial => 'ads/a1'
-      .pull-left.ml2e
-        = render :partial => 'ads/a2'
-      .clearfix
+    -if @is_adult.nil?
+      .gd2
+        .pull-left
+          = render :partial => 'ads/a1'
+        .pull-left.ml2e
+          = render :partial => 'ads/a2'
+        .clearfix
     .row-fluid
       .photo.span4
         %img{:src=>@pro.image_src}
@@ -32,8 +33,9 @@
 
     .entry-body
       =sanitize_desc(@pro.description)
-    .gd1
-      = render :partial => 'ads/eb_center'
+    -if @is_adult.nil?
+      .gd1
+        = render :partial => 'ads/eb_center'
   .span3
     -topics= Topic.related(@pro.title,10)
     -if topics.present?

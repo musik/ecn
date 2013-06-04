@@ -1,0 +1,1 @@
+#require 'naive_bayes'
