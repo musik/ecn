@@ -15,11 +15,11 @@ module Ali
     @redis ||= Resque.redis
     @redis.del "aliurls"
   end
-  def clean_urls
+  def clean_urls pros=false
     @redis ||= Resque.redis
     key = 'aliurls'
     @redis.smembers(key).each do |str|
-      @redis.srem(key,str) if is_dirty_url? str
+      @redis.srem(key,str) if is_prod_url? str
     end
   end
   def clean_topic_jobs
@@ -143,6 +143,9 @@ module Ali
   end
   def is_dirty_url? url
       url.match(/^[a-z\-]+_p(id)*\d+(_\d+|\?)/i).present?
+  end
+  def is_prod_url? url
+      url.match(/^product-(gs|free|tp).+/i).present?
   end
   def fetch_url url
     response = Typhoeus::Request.get(url,:headers=>{"Referer"=>"http://www.alibaba.com","User-Agent"=>"Soso"})

@@ -42,6 +42,9 @@ describe Ali do
     ali.is_dirty_url?("Agriculture_p1").should eql(false)
     ali.is_dirty_url?("Agriculture_p1_2").should eql(true)
     ali.is_dirty_url?("Agriculture_p1?tracelog").should eql(true)
+    ali.is_prod_url?("product-gs/458111731/Advertising_Flyer_Ballpoint_Pen.html").should eql(true)
+    ali.is_prod_url?("product-free/101584703/speedometer.html").should eql(true)
+    ali.is_prod_url?("Agriculture_p1").should eql(false)
 
     #ali.url_exist?("http://www.alibaba.com/showroom/category.html").should eql(false)
     ali.url_exist?("http://www.alibaba.com/showroom/category.html").should eql(true)
