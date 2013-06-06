@@ -84,7 +84,7 @@ class Topic < ActiveRecord::Base
   class SmartIndex
     @queue = "si"
     def self.perform
-      Resque::Job.reserve('ts_delta').perform
+      Resque::Job.reserve('ts_delta').perform rescue nil
       #while job = Resque::Job.reserve('ts_delta')
         #job.perform
       #end
