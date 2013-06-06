@@ -1,12 +1,12 @@
-update_products_count_of_empty:
-  #cron: "52 * * * *"
-  every: 3m
-  class: Topic::TopicQu
-  queue: schedule
-  description: "更新Products count"
+#update_products_count_of_empty:
+  ##cron: "52 * * * *"
+  #every: 3m
+  #class: Topic::TopicQu
+  #queue: schedule
+  #description: "更新Products count"
 si:
   #cron: "45 * * * *"
-  every: 1m
+  every: 5m
   class: Topic::SmartIndex
   queue: schedule
   description: "smart index"
