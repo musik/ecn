@@ -85,6 +85,7 @@ class Topic < ActiveRecord::Base
     @queue = "si"
     def self.perform
       Resque::Job.reserve('ts_delta').perform rescue nil
+      Resque::Job.reserve('ts_delta').perform rescue nil
       #while job = Resque::Job.reserve('ts_delta')
         #job.perform
       #end
