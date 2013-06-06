@@ -13,6 +13,8 @@ describe Ali do
     #Ali::Queues::ProductQ.perform 'http://www.alibaba.com/product-gs/565085040/high_quality_Wheat_Gluten.html'
     #ali.prepare
     #mylog ali.fetch_topic "http://www.alibaba.com/showroom/rice.html"
+    #mylog ali.fetch_topic "rice-bag"
+    #mylog ali.fetch_topic "rice"
     #mylog ali.fetch_company "http://guanhuachina.en.alibaba.com/"
     #mylog ali.fetch_company "http://www.alibaba.com/member/lwaksmann.html"
 

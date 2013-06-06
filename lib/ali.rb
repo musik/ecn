@@ -47,19 +47,16 @@ module Ali
   
   def parse_topic_links doc
     if doc
-      urls = []
+      slugs = []
       doc.css('a').each do |link|
         next unless link.attr("href").present?
-        #urls << link.attr("href") if is_category_url?(link.attr("href"))
-        urls << link.attr("href") if is_topic_url?(link.attr("href"))
+        slugs << topic_url_to_slug(link.attr("href"))
       end
-      urls.uniq.each do |href|
-        #mylog href
-        next if url_exist? href
-        Resque.enqueue Queues::TopicQ,href      
-        #next if Kv.find_by_k(href).present?
-        #Kv.create(:k=>href)
-        #delay(:priority=>9).fetch_topic(href)
+      slugs = slugs.compact.uniq
+      exists = Topic.where(:slug=>slugs).pluck(:slug)
+      slugs -= exists if exists
+      slugs.each do |slug|
+        Resque.enqueue Queues::TopicQ,slug
       end
     end
 
@@ -73,12 +70,15 @@ module Ali
       end
       urls.uniq.each do |href|
         next if url_exist? href
-        Resque.enqueue Queues::CompanyQ,href      
+        Resque.enqueue Queues::CompanyQ,href
         #next if Kv.find_by_k(href).present?
         #Kv.create(:k=>href)
         #Company.delay(:priority=>7).import_from_url(href)
       end
     end
+  end
+  def topic_url_to_slug url
+    url.match(/http:\/\/www.alibaba.com\/showroom\/([a-z0-9\-]+)\.html/)[1] rescue nil
   end
   def parse_product_links doc,limit=10
     if doc
@@ -88,7 +88,7 @@ module Ali
         urls << link.attr("href").match(/^.+?\.html/).to_s if is_product_url?(link.attr("href"))
       end
       urls.uniq.slice(0,limit).each do |href|
-        next if url_exist? href
+        #next if url_exist? href
         Resque.enqueue Queues::ProductQ,href      
         #next if Kv.find_by_k(href).present?
         #Kv.create(:k=>href)
@@ -97,6 +97,12 @@ module Ali
     end
   end
   def fetch_topic url,find_products = true
+      slug = topic_name_from_url url
+      if slug.nil?
+        slug = url
+        url = "http://www.alibaba.com/showroom/#{slug}.html"
+      end
+      return if Topic.exists? :slug=>slug
       doc = fetch_url url
       if doc
           name = doc.title.match(/^[^,]+/).to_s.downcase
@@ -112,6 +118,7 @@ module Ali
    CompanyFetcher.new(url).fetch_company 
   end
   def fetch_product url
+    return if Product.exists?(:trackback=>url)
     doc = fetch_url url
     if doc
       data =  Parser.new.parse_product_page doc,url
