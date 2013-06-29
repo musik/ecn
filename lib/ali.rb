@@ -39,6 +39,7 @@ module Ali
     key = 'queue:topic'
     size =  @redis.llen key
     data = []
+    puts "Total #{size}"
     #Range.new(0,size).each do |i|
       #str = @redis.lindex(key,i)
     @redis.lrange(key,0,-1).each do |str|
@@ -48,11 +49,12 @@ module Ali
       arg = val["args"].first
       if arg.nil? or data.include?(arg)
         @redis.lrem key,-1,str
+        puts "\tRemove #{arg}"
       else
         data << arg
       end
     end
-    puts data
+    puts "Total #{data.size}"
   end
   def url_exist? url
     @redis ||= Resque.redis
