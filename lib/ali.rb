@@ -33,8 +33,26 @@ module Ali
       next if is_category_url? val["args"].first
       Resque::Job.destroy('topic',val["class"],*(val["args"]))
     end
-    
-
+  end
+  def topic_jobs_uniq
+    @redis ||= Resque.redis
+    key = 'queue:topic'
+    size =  @redis.llen key
+    data = []
+    #Range.new(0,size).each do |i|
+      #str = @redis.lindex(key,i)
+    @redis.lrange(key,0,-1).each do |str|
+      #puts str
+      next if str.nil?
+      val = JSON.parse(str)
+      arg = val["args"].first
+      if arg.nil? or data.include?(arg)
+        @redis.lrem key,-1,str
+      else
+        data << arg
+      end
+    end
+    puts data
   end
   def url_exist? url
     @redis ||= Resque.redis

@@ -30,7 +30,7 @@ Capistrano::Configuration.instance.load do
   set(:unicorn_remote_config) { "#{shared_path}/config/unicorn.rb" }
 
   def unicorn_start_cmd
-    "cd #{current_path} && #{unicorn_bin} -c #{unicorn_remote_config} -E #{rails_env} -D"
+    "cd #{current_path} && BUNDLE_GEMFILE=#{current_path}/Gemfile #{unicorn_bin} -c #{current_path}/config/unicorn.rb -E #{rails_env} -D"
   end
   
   def unicorn_stop_cmd
@@ -64,6 +64,10 @@ Capistrano::Configuration.instance.load do
     task :restart, :roles => :app do
       run unicorn_restart_cmd
     end
+    task :force_restart, :roles => :app do
+      run unicorn_stop_cmd
+      run unicorn_start_cmd
+    end  
     
     desc <<-EOF
     |DarkRecipes| Parses the configuration file through ERB to fetch our variables and \
