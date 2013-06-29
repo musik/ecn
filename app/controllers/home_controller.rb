@@ -59,6 +59,15 @@ class HomeController < ApplicationController
         :per_page=>20)
     @title = "search '#{@q}'"
   end
+  def archive
+    @groups = Topic.search(
+        :within => {:app_id=>@current_app.id}, 
+        :group_by => 'created_at',
+        :group_function => :day,
+        :order_group_by => 'created_at',
+        :page=> params[:page],
+        :per_page=>100)
+  end
 
   def topic
     @topic = Topic.find_by_slug params[:topic_name]

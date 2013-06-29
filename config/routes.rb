@@ -12,6 +12,7 @@ Ecn::Application.routes.draw do
   match '/recent'=>"home#recent",:as=>:recent
   match '/popular'=>"home#popular",:as=>:popular
   match '/search'=>"home#search",:as=>:search
+  match '/archive'=>"home#archive",:as=>:archive
   match '/test'=>"home#test",:as=>:test
   match '/p-:product_url'=>"home#product",:as=>:product
   match '/c-:company_url'=>"home#company",:as=>:company

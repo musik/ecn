@@ -1,0 +1,7 @@
+-title 'Archive'
+%ul
+  -@groups.each_with_group_and_count do |t,group,count|
+    %li
+      =link_to group
+      %small=count
+=paginate @groups      

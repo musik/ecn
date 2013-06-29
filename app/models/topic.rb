@@ -46,6 +46,8 @@ class Topic < ActiveRecord::Base
     indexes "left(slug,1)", :as => :start_with
     indexes "left(slug,2)", :as => :start_with2
     has :id
+    has :app_id
+    has :created_at
     has :products_count
     set_property :delta => ThinkingSphinx::Deltas::ResqueDelta
     #set_property :delta => :delayed  
