@@ -34,7 +34,7 @@ module Ali
       Resque::Job.destroy('topic',val["class"],*(val["args"]))
     end
   end
-  def topic_jobs_uniq
+  def topic_jobs_uniq_bulk
     @redis ||= Resque.redis
     key = 'queue:topic'
     size =  @redis.llen key
@@ -59,10 +59,33 @@ module Ali
     size =  @redis.llen key
     puts "Total #{size}"
   end
-  def url_exist? url
+  def topic_jobs_uniq
     @redis ||= Resque.redis
-    key = 'aliurls'
-    val = url.match(/http\:\/\/[^\/]+\/(.+)$/)[1]
+    key = 'queue:topic'
+    size =  @redis.llen key
+    puts "Total #{size}"
+    data = []
+    #Range.new(0,size).each do |i|
+    i = size - 1
+    while i >= 0
+      str = @redis.lindex(key,i)
+      i-=1
+      break if str.nil?
+      val = JSON.parse(str)
+      arg = val["args"].first
+      if arg.nil? or data.include?(arg)
+        @redis.lrem key,-1,str
+        puts "\tRemove #{arg}"
+      else
+        data << arg
+      end
+    end
+    size =  @redis.llen key
+    puts "Total #{size}"
+  end
+  def url_exist? val,key = 'aliurls'
+    @redis ||= Resque.redis
+    #val = url.match(/http\:\/\/[^\/]+\/(.+)$/)[1]
     return true if @redis.sismember key,val
     @redis.sadd key,val
     false
@@ -76,10 +99,11 @@ module Ali
         slugs << topic_url_to_slug(link.attr("href"))
       end
       slugs = slugs.compact.uniq
-      exists = Topic.where(:slug=>slugs).pluck(:slug)
-      slugs -= exists if exists
+      #exists = Topic.where(:slug=>slugs).pluck(:slug)
+      #slugs -= exists if exists
       slugs.each do |slug|
-        Resque.enqueue Queues::TopicQ,slug
+        next if url_exist? slug,'alitopic'
+        Resque.enqueue TopicJob,slug
       end
     end
 
