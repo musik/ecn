@@ -38,23 +38,26 @@ module Ali
     @redis ||= Resque.redis
     key = 'queue:topic'
     size =  @redis.llen key
-    data = []
     puts "Total #{size}"
-    #Range.new(0,size).each do |i|
-      #str = @redis.lindex(key,i)
-    @redis.lrange(key,0,-1).each do |str|
-      #puts str
-      next if str.nil?
-      val = JSON.parse(str)
-      arg = val["args"].first
-      if arg.nil? or data.include?(arg)
-        @redis.lrem key,-1,str
-        puts "\tRemove #{arg}"
+    data = {}
+    #@redis.lrange(key,0,-1).each do |str|
+    Range.new(0,size).each do |i|
+      str = @redis.lindex(key,i)
+      if data.has_key?(str)
+        data[str]+=1
       else
-        data << arg
+        data[str] = 1
       end
     end
-    puts "Total #{data.size}"
+    data.each do |str,count|
+      if count > 1
+        @redis.lrem key,count-1,str
+        val = JSON.parse(str)
+        puts "\tRemove #{val["args"].first}"
+      end
+    end
+    size =  @redis.llen key
+    puts "Total #{size}"
   end
   def url_exist? url
     @redis ||= Resque.redis
