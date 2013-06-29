@@ -102,6 +102,7 @@ module Ali
       #exists = Topic.where(:slug=>slugs).pluck(:slug)
       #slugs -= exists if exists
       slugs.each do |slug|
+        next if slug.count("-") > 3
         next if url_exist? slug,'alitopic'
         Resque.enqueue TopicJob,slug
       end
