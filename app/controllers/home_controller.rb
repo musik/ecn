@@ -82,7 +82,7 @@ class HomeController < ApplicationController
         :group_by => 'created_at',
         :group_function => :day,
         :order_group_by => '@group DESC',
-        :per_page=>30)
+        :per_page=>15)
   end
 
   def topic
