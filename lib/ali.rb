@@ -145,7 +145,7 @@ module Ali
     end
   end
   def fetch_topic url,find_products = true
-      pp url
+      #pp url
       slug = topic_name_from_url url
       if slug.nil?
         slug = url
