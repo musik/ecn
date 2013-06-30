@@ -45,6 +45,7 @@ class Topic < ActiveRecord::Base
     indexes name
     indexes "left(slug,1)", :as => :start_with
     indexes "left(slug,2)", :as => :start_with2
+    has "DATE_FORMAT(created_at,'%Y%m%d')",:as=>:day
     has :id
     has :app_id
     has :created_at

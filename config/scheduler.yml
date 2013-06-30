@@ -6,7 +6,7 @@
   #description: "更新Products count"
 si:
   #cron: "45 * * * *"
-  every: 5m
+  every: 15m
   class: Topic::SmartIndex
   queue: schedule
   description: "smart index"

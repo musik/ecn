@@ -1,0 +1,16 @@
+-title @day.to_s
+-@cols = 'col2r'
+
+=paginate @topics,:window=>10
+.topics
+  -@topics.each do |t|
+    =link_to t.name,t,:class=>cycle("small","big")
+    =t.app_id if params[:debug]
+-content_for :sidebar do
+  %h3 Archives
+  %ul
+    -@groups.each_with_group_and_count do |t,group,count|
+      %li
+        =link_to group,"/archive/#{group}"
+        %small=count
+  =paginate @groups      

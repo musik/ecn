@@ -2,6 +2,6 @@
 %ul
   -@groups.each_with_group_and_count do |t,group,count|
     %li
-      =link_to group
+      =link_to group,"/archive/#{group}"
       %small=count
 =paginate @groups      

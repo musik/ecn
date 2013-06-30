@@ -60,13 +60,29 @@ class HomeController < ApplicationController
     @title = "search '#{@q}'"
   end
   def archive
-    @groups = Topic.search(
-        :within => {:app_id=>@current_app.id}, 
+    @groups = Topic.search(nil,
+        :with => {:app_id=>@current_app.id}, 
         :group_by => 'created_at',
         :group_function => :day,
-        :order_group_by => 'created_at',
+        :sort_mode => :extended,
+        :order => '@group DESC',
         :page=> params[:page],
         :per_page=>100)
+  end
+  def day
+    @day = Date.parse params[:day]
+    @nextday = @day + 1
+    @topics = Topic.search(
+        :with => {:app_id=>@current_app.id,:created_at=>@day..@nextday}, 
+        :page=> params[:page],
+        :per_page=>100
+      )
+    @groups = Topic.search(
+        :with => {:app_id=>@current_app.id}, 
+        :group_by => 'created_at',
+        :group_function => :day,
+        :order_group_by => '@group DESC',
+        :per_page=>30)
   end
 
   def topic
