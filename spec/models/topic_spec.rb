@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Topic do
   it "should in future" do
+    TopicJob.perform 'rice'
     #App.create :name=>"88nu"
     #App.create :name=>"11li"
     #APPS = App.all_hash

@@ -5,7 +5,6 @@
 .topics
   -@topics.each do |t|
     =link_to t.name,t,:class=>cycle("small","big")
-    =t.app_id if params[:debug]
 -content_for :sidebar do
   %h3 Archives
   %ul
