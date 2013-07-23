@@ -90,6 +90,10 @@ module Ali
     @redis.sadd key,val
     false
   end
+  def topic_jobs_count
+    @redis ||= Resque.redis
+    @redis.llen "queue:topic"
+  end
   
   def parse_topic_links doc
     if doc
@@ -103,6 +107,7 @@ module Ali
       #slugs -= exists if exists
       slugs.each do |slug|
         next if slug.count("-") > 3
+        next if topic_jobs_count > 1000000
         next if url_exist? slug,'alitopic'
         Resque.enqueue TopicJob,slug
       end

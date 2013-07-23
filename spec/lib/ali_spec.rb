@@ -50,6 +50,7 @@ describe Ali do
 
     #ali.url_exist?("http://www.alibaba.com/showroom/category.html").should eql(false)
     ali.url_exist?("http://www.alibaba.com/showroom/category.html").should eql(true)
+    #pp ali.topic_jobs_count
     
   end
   it "should clean " do
