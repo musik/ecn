@@ -10,7 +10,8 @@ describe Ali do
     #ali.prepare
     
     #Ali::Queues::TopicQ.perform 'http://www.alibaba.com/Agriculture_p1'
-    #Ali::Queues::ProductQ.perform 'http://www.alibaba.com/product-gs/565085040/high_quality_Wheat_Gluten.html'
+    Ali::Queues::ProductQ.perform 'http://www.alibaba.com/product-gs/625531194/Helmet_for_adult_Out_In_mold.html'
+    Ali::Queues::ProductQ.perform ali.fetch_product "http://www.alibaba.com/product-gs/432571077/Grey_Marble_Marble_Subway_Tile_Marble.html"
     #ali.prepare
     #mylog ali.fetch_topic "http://www.alibaba.com/showroom/rice.html"
     #mylog ali.fetch_topic "rice-bag"

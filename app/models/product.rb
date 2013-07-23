@@ -21,6 +21,10 @@ class Product < ActiveRecord::Base
   def fastapp
     @fastapp ||= APPS[app_id]
   end
+  def price_hash
+    YAML.load(price)
+  end
+
   define_index do
     indexes title
     indexes description

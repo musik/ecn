@@ -3,9 +3,9 @@ module Ali
     include ActionView::Helpers::SanitizeHelper
     def sanitize_description(text)
       c = HTMLEntities.new
-      # 
       text = c.encode text,:named
       text.gsub!(/&nbsp;/,' ')
+      text.gsub!(/&#160;/,' ')
       text = c.decode text
       text = sanitize(text,:tags=>%w(table tr td th p br img strong)).gsub(/<p>\s*<\/p>/,'')
       
@@ -13,13 +13,16 @@ module Ali
       # HTML
     end
     def parse_product_page doc,url
-      title = doc.at_css('#productTitle').text rescue nil
-      return unless title.present?
+      inode = doc.at_css('#inquiry-cart-control')
+      return nil if inode.nil? and doc.at_css('.unverified').present?
+      ivar = ActiveSupport::JSON.decode(inode.attr('data-ic-config').gsub(/\'/,'"'))
+      company_name = ivar["belongCompanyName"]
+      #return nil if company_name.blank?
       data ={
-        :title => title,
+        :title => ivar["subject"],
         :trackback => url,
-        :image_src => (doc.at_css('#bigImage').attribute("src").to_s rescue nil),
-        :description => (doc.at_css('#richTextDescription').inner_html.ftrip rescue nil)
+        :image_src => ivar["imgUrl"],
+        :description => (doc.at_css('#J-rich-text-description').inner_html.ftrip rescue nil)
       }
       unless data[:description].nil?
         # pp data[:description].length
@@ -28,24 +31,35 @@ module Ali
       end
       
       hs = {}
-      doc.css("#productTbInfo tr").each do |t|
+      doc.css(".ls-brief tr").each do |t|
         arr = t.text.gsub(/\s+/,' ').strip.split(": ")
         hs[arr[0].to_url] = arr[1]
       end
       hs.delete("custom-order")
-      hs["fob-price"] = hs["fob-price"].gsub(/Get Latest Price/,'').strip
+      #hs["fob-price"] = hs["fob-price"].gsub(/Get Latest Price/,'').strip
       data[:price] = hs
       
       data[:meta] = parse_product_meta(doc)
       data[:company] = parse_product_company doc
       data[:fetched] = true
       data
+      #pp data
       
       # Product.import(data)
     end
+    def parse_product_company doc
+      node = doc.at_css('.brand.dot-app-card')
+      return nil if node.nil? and doc.at_css('.unverified').present?
+      data = {
+        :name => node.text.strip,
+        :trackback => node.attribute("href").to_s,
+        # :btypes => doc.at_css('#businessType').text
+      }
+      Company.import(data)
+    end
     def parse_product_meta doc
       data = {}
-      doc.css('#con_PDtab .ue-box-title').each do |t|
+      doc.css('#J-product-detail .box h3.title').each do |t|
         # group = t.text
         node = t.next_element
         if node.name == 'table'
@@ -82,16 +96,6 @@ module Ali
         @parent = @c
       end
       @parent
-    end
-    def parse_product_company doc
-      node = doc.at_css('#companyName')
-      return nil if node.nil? and doc.at_css('.uv-company').present?
-      data = {
-        :name => node.text.strip,
-        :trackback => node.attribute("href").to_s,
-        # :btypes => doc.at_css('#businessType').text
-      }
-      Company.import(data)
     end
 
     #从产品页读取公司网址并抓取公司页

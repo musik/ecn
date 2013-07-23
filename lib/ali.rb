@@ -176,6 +176,7 @@ module Ali
     doc = fetch_url url
     if doc
       data =  Parser.new.parse_product_page doc,url
+      return if data.nil?
       p = Product.import_data data
       parse_topic_links doc
       p
