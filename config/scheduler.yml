@@ -3,8 +3,8 @@
   #class: Topic::TopicQu
   #queue: schedule
   #description: "更新Products count"
-si:
-  every: 19m
-  class: Topic::SmartIndex
-  queue: schedule
-  description: "smart index"
+#si:
+  #every: 19m
+  #class: Topic::SmartIndex
+  #queue: schedule
+  #description: "smart index"

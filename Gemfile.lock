@@ -1,4 +1,15 @@
 GIT
+  remote: git://github.com/acumenbrands/ts-throttled-resque-delta.git
+  revision: e6ab6b7646db78200897397499299e42c357b696
+  specs:
+    ts-throttled-resque-delta (1.2.2)
+      resque (~> 1.10)
+      resque-lock-timeout (~> 0.4.0)
+      resque-throttle (~> 0.3.0)
+      riddle (>= 1.5)
+      thinking-sphinx (>= 1.4.1)
+
+GIT
   remote: git://github.com/sosedoff/capistrano-unicorn.git
   revision: 58c68c57db9d90ea76889e81d4844846b414b5fa
   specs:
@@ -227,14 +238,12 @@ GEM
       resque (~> 1.0)
     resque-lock-timeout (0.4.1)
       resque (>= 1.8.0)
-    resque-pool (0.3.0)
-      rake
-      resque (~> 1.20)
-      trollop (~> 1.16)
     resque-scheduler (2.0.0)
       redis (>= 2.0.1)
       resque (>= 1.20.0)
       rufus-scheduler
+    resque-throttle (0.3.0)
+      resque (>= 1.6.0)
     riddle (1.5.3)
     rolify (3.2.0)
     rspec (2.11.0)
@@ -294,12 +303,6 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    trollop (1.16.2)
-    ts-resque-delta (1.2.4)
-      resque (~> 1.10)
-      resque-lock-timeout (~> 0.4)
-      riddle (>= 1.5)
-      thinking-sphinx (>= 1.4.1)
     twitter-stream (0.1.16)
       eventmachine (>= 0.12.8)
       http_parser.rb (~> 0.5.1)
@@ -362,7 +365,6 @@ DEPENDENCIES
   redis
   resque
   resque-cleaner
-  resque-pool
   resque-scheduler
   rolify (>= 3.1.0)
   rspec-rails (>= 2.11.0)
@@ -373,7 +375,7 @@ DEPENDENCIES
   stringex
   therubyracer
   thinking-sphinx (= 2.0.13)
-  ts-resque-delta (~> 1.2.4)
+  ts-throttled-resque-delta!
   typhoeus
   uglifier (>= 1.0.3)
   unicorn
