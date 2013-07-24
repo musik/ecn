@@ -68,7 +68,7 @@ gem 'resque'
 #gem "resque", "~> 2.0.0.pre.1", github: "resque/resque"
 gem 'resque-scheduler', :require => 'resque_scheduler'
 gem 'resque-cleaner'
-#gem 'resque-pool'
+gem 'resque-pool'
 
 gem 'god'
 
