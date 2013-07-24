@@ -90,6 +90,7 @@ class Topic < ActiveRecord::Base
       Resque::Job.reserve('ts_delta').perform rescue nil
       Resque::Job.reserve('ts_delta').perform rescue nil
       Topic.update_products_count_of_empty
+      Resque::Job.reserve('ts_delta').perform rescue nil
       #while job = Resque::Job.reserve('ts_delta')
         #job.perform
       #end
