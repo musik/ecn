@@ -88,9 +88,11 @@ class Topic < ActiveRecord::Base
     @queue = "si"
     def self.perform
       Resque::Job.reserve('ts_delta').perform rescue nil
-      #Resque::Job.queued('ts_delta','ThinkingSphinx::Deltas::ResqueDelta::DeltaJob','topic_delta')
-      #Resque::Job.reserve('ts_delta').perform rescue nil
+      Resque::Job.reserve('ts_delta').perform rescue nil
+      Resque::Job.reserve('ts_delta').perform rescue nil
       Topic.update_products_count_of_empty
+      Resque::Job.reserve('ts_delta').perform rescue nil
+      Resque::Job.reserve('ts_delta').perform rescue nil
       Resque::Job.reserve('ts_delta').perform rescue nil
       #while job = Resque::Job.reserve('ts_delta')
         #job.perform
