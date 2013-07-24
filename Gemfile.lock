@@ -238,6 +238,10 @@ GEM
       resque (~> 1.0)
     resque-lock-timeout (0.4.1)
       resque (>= 1.8.0)
+    resque-pool (0.3.0)
+      rake
+      resque (~> 1.20)
+      trollop (~> 1.16)
     resque-scheduler (2.0.0)
       redis (>= 2.0.1)
       resque (>= 1.20.0)
@@ -303,6 +307,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    trollop (1.16.2)
     twitter-stream (0.1.16)
       eventmachine (>= 0.12.8)
       http_parser.rb (~> 0.5.1)
@@ -365,6 +370,7 @@ DEPENDENCIES
   redis
   resque
   resque-cleaner
+  resque-pool
   resque-scheduler
   rolify (>= 3.1.0)
   rspec-rails (>= 2.11.0)
