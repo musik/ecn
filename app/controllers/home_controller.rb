@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   def status
     @data = {
       :topic => Topic.count,
+      :topic_empty => Topic.where('products_count = 0').count,
       :company => Company.count,
       :product => Product.count
     }
